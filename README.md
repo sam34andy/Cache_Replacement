@@ -3,10 +3,9 @@
 
 ### 題目: Cache_Replacement
 
-### 要求:
-
-
 ### 使用語言: C++
+
+### 要求:
     1.讀取一個檔案
     2.可以自行設定Block size
     3.可以自行設定Cache total size    
