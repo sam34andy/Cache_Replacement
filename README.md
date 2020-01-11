@@ -75,3 +75,20 @@
     void Cache_Replacement(int, int, int);
     int Binary_To_Decimal(string);
     void print(int, int, int);
+   
+### 資料儲存形態與內容:
+	cache:所有的line。
+	set_history:紀錄每個set裡面已經放了多少筆資料。例:4 way associative最多能在對應的[i]set中放入四筆資料。
+	addr:每個address的資料，包含Tag、Index與Offset的binary數值。也包含Index的decimal數值。
+	
+### 程式碼呼叫順序與函式執行內容:
+	main	// input cache與block的大小並決定要使用的cache replacement strategy
+		-> Data_Transfer // 把16進制的address換成2進制，並把Offset, Index, Tag分別進行存取
+			-> Binary_To_Decimal // 把Index換成十進制的數字，方便其他地方使用
+		-> Cache_Replacement
+		
+	Cache_Replacement執行內容(按順序):
+		每個cache的line都有一個counter，用來記錄這筆資料已經多久沒有被使用過。
+		1.找到相對應Index的set。給該set裡的每行line的counter+1。並確認是否與最新的資料是同一筆Tag。
+		2.(a)if 是相同Tag。在strategy為LRU下，將該counter更新為0。如果strategy為FIFO，則不做事。
+		2.(b)if 是不相同Tag，則將該set中counter數字最大的line進行取代。
